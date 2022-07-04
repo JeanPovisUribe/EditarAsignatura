@@ -122,15 +122,15 @@ class AsignaturaTestCase(unittest.TestCase):
         self.assertEqual(asignatura.nombreAsignatura, 'Pruebas de software')
 
     def test_editar_asignatura(self):
-        resultado = self.gestionAsignatura.editar_asignatura('', '')
+        resultado = self.gestionAsignatura.editar_asignatura('Pruebas de software', 'Construccion App')
         self.assertTrue(resultado)
 
     def test_editar_asignatura_NombreNoVacio(self):
-        resultado = self.gestionAsignatura.editar_asignatura(nombreAsignatura="Prueba", nombreNuevo="")
-        self.assertEqual(resultado, True)
+        resultado = self.gestionAsignatura.editar_asignatura(nombreAsignatura="", nombreNuevo="")
+        self.assertEqual(resultado, False)
 
     def test_editar_asignatura_verificar_almacenamiento(self):
-        self.gestionAsignatura.editar_asignatura('', 'Construccion App')
+        self.gestionAsignatura.editar_asignatura('Pruebas de software', 'Construccion App')
         self.session = Session()
         asignatura = self.session.query(Asignatura).filter(
             Asignatura.nombreAsignatura == 'Construccion App').first()
@@ -138,7 +138,7 @@ class AsignaturaTestCase(unittest.TestCase):
         self.assertEqual(asignatura.nombreAsignatura, 'Construccion App')
 
     def test_editar_asignatura_cambiar_mayuscula(self):
-        self.gestionAsignatura.editar_asignatura('Pruebas de software', '')
+        self.gestionAsignatura.editar_asignatura('Pruebas de software', 'construccion app')
 
         self.session = Session()
         asignatura = self.session.query(Asignatura).filter(

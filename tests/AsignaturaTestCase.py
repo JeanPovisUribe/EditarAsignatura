@@ -122,14 +122,17 @@ class AsignaturaTestCase(unittest.TestCase):
         self.assertEqual(asignatura.nombreAsignatura, 'Pruebas de software')
 
     def test_editar_asignatura(self):
+        """Se envia el nombre nuevo de la asignatura a editar"""
         resultado = self.gestionAsignatura.editar_asignatura('Pruebas de software', 'Construccion App')
         self.assertTrue(resultado)
 
     def test_editar_asignatura_NombreNoVacio(self):
+        """Verifica que el nombre de asignatura no este vacio"""
         resultado = self.gestionAsignatura.editar_asignatura(nombreAsignatura="", nombreNuevo="")
         self.assertEqual(resultado, False)
 
     def test_editar_asignatura_verificar_almacenamiento(self):
+        """Verifica que al almacenar los datos queden guardados en el almacenamiento"""
         self.gestionAsignatura.editar_asignatura('Pruebas de software', 'Construccion App')
         self.session = Session()
         asignatura = self.session.query(Asignatura).filter(
@@ -138,6 +141,8 @@ class AsignaturaTestCase(unittest.TestCase):
         self.assertEqual(asignatura.nombreAsignatura, 'Construccion App')
 
     def test_editar_asignatura_cambiar_mayuscula(self):
+        """Se cambia la primera letra del nombre ingresado a mayusculo si esta es minuscula"""
+
         self.gestionAsignatura.editar_asignatura('Pruebas de software', 'construccion app')
 
         self.session = Session()
